@@ -41,7 +41,8 @@ fun TodoScreen(
         modifier = modifier.fillMaxSize()
     ) {
         Card(
-            modifier = modifier.padding(horizontal = 8.dp, vertical = 8.dp)
+            modifier = modifier
+                .padding(horizontal = 8.dp, vertical = 8.dp)
                 .fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
             colors = CardDefaults.cardColors(
@@ -51,12 +52,13 @@ fun TodoScreen(
             border = BorderStroke(2.dp, Color(0xFF53A954))
         ) {
             Row(
-                Modifier.padding(16.dp)
+                Modifier
+                    .padding(16.dp)
                     .fillMaxWidth()
             ) {
                 Column(
                     Modifier.weight(1f)
-                ){
+                ) {
                     Text(
                         text = state.title,
                         fontSize = 18.sp,
@@ -80,39 +82,6 @@ fun TodoScreen(
             }
         }
     }
-
-    /*Row(
-        modifier = modifier.fillMaxSize(),
-    ) {
-        Column(
-            modifier = modifier
-                .padding(16.dp)
-        ) {
-            Text(
-                text = state.title,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                textDecoration = TextDecoration.LineThrough.takeIf { state.isChecked }
-                    ?: TextDecoration.None
-            )
-            Text(
-                text = state.description,
-                fontSize = 14.sp,
-                textDecoration = TextDecoration.LineThrough.takeIf { state.isChecked }
-                    ?: TextDecoration.None
-            )
-        }
-        Row(
-            Modifier.padding(top = 8.dp)
-        ) {
-            Checkbox(
-                checked = state.isChecked,
-                onCheckedChange = {
-                    onAction(TodoActions.OnTextStrikeThrough(isChecked = it))
-                }
-            )
-        }
-    }*/
 }
 
 @Preview(showBackground = true)
