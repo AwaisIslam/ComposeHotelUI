@@ -94,15 +94,3 @@ private fun TodoScreenPreview() {
         )
     }
 }
-
-/*
-Card(
-modifier = modifier.padding(16.dp)
-.fillMaxWidth(),
-shape = RoundedCornerShape(16.dp),
-colors = CardDefaults.cardColors(
-containerColor = Color(0xFFC2D7BC)
-),
-elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-border = BorderStroke(2.dp, Color(0xFF8369AD))
-) {*/
