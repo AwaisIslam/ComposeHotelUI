@@ -10,6 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -77,7 +78,12 @@ fun TodoScreen(
                     checked = state.isChecked,
                     onCheckedChange = {
                         onAction(TodoActions.OnTextStrikeThrough(isChecked = it))
-                    }
+                    },
+                    colors = CheckboxDefaults.colors(
+                        checkedColor = Color(0xFF53A954),
+                        uncheckedColor = Color.Gray,
+                        checkmarkColor = Color.White
+                    )
                 )
             }
         }
