@@ -1,5 +1,6 @@
 package com.ak.composehotelui.checkbox
 
+import android.graphics.Insets.add
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,8 +10,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
@@ -28,28 +30,28 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.ak.composehotelui.numberguess.NumberGuessActions
 import com.ak.composehotelui.ui.theme.ComposeHotelUITheme
 
 @Composable
 fun TodoScreenRoot(modifier: Modifier = Modifier) {
     val todoViewModel = viewModel<TodoViewModel>()
     val state by todoViewModel.todoState.collectAsStateWithLifecycle()
-    TodoScreen(modifier, state, onAction = todoViewModel::onAction)
+    val todoListState by todoViewModel.todoList.collectAsStateWithLifecycle()
+    TodoScreen(modifier, state, onAction = todoViewModel::onAction, todoListState)
 }
 
 @Composable
 fun TodoScreen(
     modifier: Modifier = Modifier,
     state: TodoStates,
-    onAction: (TodoActions) -> Unit = {}
+    onAction: (TodoActions) -> Unit = {},
+    todoListState: List<TodoStates>
 ) {
     Column(
         modifier.fillMaxSize(),
@@ -58,7 +60,7 @@ fun TodoScreen(
             Modifier.weight(1f)
                 .fillMaxWidth()
         ) {
-            items(100) { i ->
+            itemsIndexed(todoListState) {index, todoItem ->
                 Card(
                     modifier = Modifier
                         .padding(horizontal = 8.dp, vertical = 8.dp)
@@ -80,23 +82,23 @@ fun TodoScreen(
                             Modifier.weight(1f)
                         ) {
                             Text(
-                                text = "${state.title} $i",
+                                text = todoItem.title,
                                 fontSize = 18.sp,
                                 fontWeight = FontWeight.Bold,
-                                textDecoration = TextDecoration.LineThrough.takeIf { state.isChecked }
+                                textDecoration = TextDecoration.LineThrough.takeIf { todoItem.isChecked }
                                     ?: TextDecoration.None
                             )
                             Text(
-                                text = state.description,
+                                text = todoItem.description,
                                 fontSize = 14.sp,
-                                textDecoration = TextDecoration.LineThrough.takeIf { state.isChecked }
+                                textDecoration = TextDecoration.LineThrough.takeIf { todoItem.isChecked }
                                     ?: TextDecoration.None
                             )
                         }
                         Checkbox(
-                            checked = state.isChecked,
-                            onCheckedChange = {
-                                onAction(TodoActions.OnTextStrikeThrough(isChecked = it))
+                            checked = todoItem.isChecked,
+                            onCheckedChange = {checked->
+                                onAction(OnTextStrikeThrough(index,checked))
                             },
                             colors = CheckboxDefaults.colors(
                                 checkedColor = Color(0xFF53A954),
@@ -105,7 +107,9 @@ fun TodoScreen(
                             )
                         )
                         IconButton(
-                            onClick = {}
+                            onClick = {
+                                onAction(OnDeleteItem(index))
+                            }
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Delete,
@@ -126,18 +130,25 @@ fun TodoScreen(
                 Modifier.weight(1f)
             ) {
                 TextField(
-                    value = "Item number",
-                    onValueChange = {newText-> }
+                    value = state.title,
+                    onValueChange = {title->
+
+                        onAction(OnAddTitle(title = title))
+                    }
                 )
                 Spacer(modifier = Modifier.padding(8.dp))
                 TextField(
-                    value = "Item Description",
-                    onValueChange = {newText-> }
+                    value = state.description ,
+                    onValueChange = {description->
+                        onAction(OnAddDescription(description))
+                    }
                 )
             }
             Button(
                 modifier = Modifier.padding(8.dp),
-                onClick = {}
+                onClick = {
+                    onAction(OnAddItem)
+                }
             ) {
                 Text(text = "Add Item")
             }
@@ -151,7 +162,18 @@ private fun TodoScreenPreview() {
     ComposeHotelUITheme {
         TodoScreen(
             state = TodoStates(),
-            onAction = {}
+            todoListState = listOf(
+                TodoStates(
+                    title = "Title 1",
+                    description = "Description 1",
+                    isChecked = false
+                ),
+                TodoStates(
+                    title = "Title 2",
+                    description = "Description 2",
+                    isChecked = true
+                )
+            )
         )
     }
 }

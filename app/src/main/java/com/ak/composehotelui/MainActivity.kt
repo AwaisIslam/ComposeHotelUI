@@ -7,15 +7,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.ak.composehotelui.checkbox.TodoScreen
 import com.ak.composehotelui.checkbox.TodoScreenRoot
-import com.ak.composehotelui.checkbox.TodoStates
-import com.ak.composehotelui.hotel.HotelBookingScreen
-import com.ak.composehotelui.numberguess.NumberGuessScreenRoot
+import com.ak.composehotelui.dragable.DraggableModifiers
 import com.ak.composehotelui.ui.theme.ComposeHotelUITheme
 
 class MainActivity : ComponentActivity() {
@@ -29,7 +25,9 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.padding(innerPadding)
                     )*/
                     //NumberGuessScreenRoot(modifier = Modifier.padding(innerPadding))
-                    TodoScreenRoot(modifier = Modifier.padding(innerPadding))
+                    //TodoScreenRoot(modifier = Modifier.padding(innerPadding))
+                    //FocusManagement(modifier = Modifier.padding(innerPadding))
+                    DraggableModifiers(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
@@ -42,8 +40,6 @@ fun GreetingPreview() {
     ComposeHotelUITheme {
         //HotelBookingScreen()
         //NumberGuessScreenRoot()
-        TodoScreen(
-            state = TodoStates()
-        )
+        TodoScreenRoot()
     }
 }
