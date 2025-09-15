@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.ak.composehotelui.checkbox.TodoScreenRoot
+import com.ak.composehotelui.dragable.DraggableModifiers
 import com.ak.composehotelui.ui.theme.ComposeHotelUITheme
 
 class MainActivity : ComponentActivity() {
@@ -24,7 +25,9 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.padding(innerPadding)
                     )*/
                     //NumberGuessScreenRoot(modifier = Modifier.padding(innerPadding))
-                    TodoScreenRoot(modifier = Modifier.padding(innerPadding))
+                    //TodoScreenRoot(modifier = Modifier.padding(innerPadding))
+                    //FocusManagement(modifier = Modifier.padding(innerPadding))
+                    DraggableModifiers(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
