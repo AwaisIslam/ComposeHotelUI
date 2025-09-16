@@ -3,7 +3,6 @@ package com.ak.composehotelui.advanced_layouts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.requiredWidth
@@ -21,8 +20,9 @@ import com.ak.composehotelui.ui.theme.ComposeHotelUITheme
 @Composable
 fun SizeModifiersDemo(modifier: Modifier = Modifier) {
     Row(
-        modifier = Modifier.height(100.dp)
-        .fillMaxWidth()
+        modifier = Modifier
+            .height(100.dp)
+            .fillMaxWidth()
             .background(Color.Red)
     ) {
         Box(
@@ -36,7 +36,7 @@ fun SizeModifiersDemo(modifier: Modifier = Modifier) {
                 )
                 .printConstraints("After 1. fillMaxWidth")
                 .background(Color.Yellow)
-        ){
+        ) {
             Text("Hello World")
         }
     }
