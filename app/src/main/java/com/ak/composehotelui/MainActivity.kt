@@ -17,12 +17,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import com.ak.composehotelui.advanced_layouts.LazyMindMapLayout
+import com.ak.composehotelui.advanced_layouts.MindMapItem
 import com.ak.composehotelui.advanced_layouts.SubComposePagedRow
 import com.ak.composehotelui.checkbox.TodoScreenRoot
 import com.ak.composehotelui.ui.theme.ComposeHotelUITheme
@@ -42,7 +47,7 @@ class MainActivity : ComponentActivity() {
                     //TodoScreenRoot(modifier = Modifier.padding(innerPadding))
                     //FocusManagement(modifier = Modifier.padding(innerPadding))
                     //DraggableModifiers(modifier = Modifier.padding(innerPadding))
-                    Column(
+                    /*Column(
                         modifier = Modifier.padding(innerPadding)
                     ) {
                         var page by remember {
@@ -67,7 +72,48 @@ class MainActivity : ComponentActivity() {
                                 text = "Go to next page"
                             )
                         }
+                    }*/
+                    val mindMapItems = remember {
+                        listOf(
+                            MindMapItem(
+                                title = "hello World1",
+                                percentOffset = Offset(
+                                    0f,0f
+                                )
+                            ),
+                            MindMapItem(
+                                title = "hello World2",
+                                percentOffset = Offset(
+                                    1f,0f
+                                )
+                            ),
+                            MindMapItem(
+                                title = "hello World3",
+                                percentOffset = Offset(
+                                    0.3f,-0.5f
+                                )
+                            ),
+                            MindMapItem(
+                                title = "hello World4",
+                                percentOffset = Offset(
+                                    -0.2f,1.5f
+                                )
+                            )
+                        )
                     }
+                    var mindMapOffset by remember {
+                        mutableStateOf(IntOffset.Zero)
+                    }
+                    LazyMindMapLayout(
+                        items = mindMapItems,
+                        mindMapOffset = mindMapOffset,
+                        onDrag = {
+                            mindMapOffset += it
+                        },
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding)
+                    )
                 }
             }
         }
